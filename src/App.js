@@ -1,41 +1,50 @@
 import React, { useState } from "react";
 
 function App() {
-  const [minutes, setMinutes] = useState(0);
-  const [active, setActive] = useState(false);
-  const reset = () => {
-    setMinutes = 0;
-  };
+  const [amount, setAmount] = useState(0);
+  const [active, setActive] = useState(true);
+
   const onChange = (event) => {
-    setMinutes(event.taget.value);
+    console.log(event);
+
+    setAmount(event.target.value);
+  };
+  const reset = () => {
+    setAmount(0);
   };
   const changeActive = () => {
-    setActive(!active);
+    reset();
+    setActive((prevState) => {
+      return !prevState;
+    });
   };
+
   return (
     <div>
       <div>Time Converter</div>
       <div>
-        Minutes :{" "}
+        Minutes{" "}
         <input
           placeholder="Minutes"
-          value={minutes}
+          value={active ? amount : amount * 60}
           type="number"
           onChange={onChange}
-          disabled={active}
+          disabled={!active}
         />
         <div>
-          Hours :
+          Hours{" "}
           <input
             type="number"
             placeholder="Hours"
-            value={Math.floor(minutes / 60)}
-            disabled={!active}
+            value={active ? Math.floor(amount / 60) : amount}
+            disabled={active}
+            onChange={onChange}
           />
         </div>
         <button onClick={reset}>Reset</button>
         <button onClick={changeActive}>active toggle</button>
       </div>
+      <hr />
     </div>
   );
 }
